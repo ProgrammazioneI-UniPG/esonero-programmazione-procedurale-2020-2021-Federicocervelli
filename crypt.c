@@ -3,36 +3,25 @@
 #include <time.h>
 #include <string.h> 
 
-//void encryptDecrypt(char *input, char *output, char *key) {
-//	
-//	
-//}
-
 int main () {
     char baseStr[128];
-    printf("Inserisci la stringa da criptare: ");
-    fgets(baseStr, 128, stdin);
+    printf("Inserisci la stringa da criptare, se supera i 128 caratteri verrà tagliata: ");
+    fgets(baseStr, 128, stdin);    
 
-    int choice;
+    int scelta;
     printf("Scegli:\n1 - per scegliere una chiave a richiesta (più lunga della stringa precedente ma al massimo lunga 128 caratteri):\n2 - per fare in modo che il programma scelga a caso una chiave per crittare la stringa:\n");
-    scanf("%d", &choice);
+    scanf("%d", &scelta);
     char key[128];
     char output[128];
     int i;
-    if(choice == 1){
+    if(scelta == 1){
 
         
         printf("Inserisci la chiave desiderata: ");
-        fgetc(stdin);
+        fgetc(stdin);       //fgetc() ritorna EOF quindi evita che fgets() venga skippato
         fgets(key, 128, stdin);
         if (strlen(key) >= strlen(baseStr)){
 
-            //char input[strlen(baseStr) + 1];
-            //encryptDecrypt(baseStr, encrypted, key);
-
-            
-
-            
 	        for(i = 0; i < strlen(baseStr); i++) {
 		    output[i] = baseStr[i] ^ key[i];
 	        }
@@ -42,21 +31,16 @@ int main () {
 		    output[i] = output[i] ^ key[i];
 	        }
             printf("Decrittato: %s\n", output);
-            //nota a me stesso: fai una funzione per non ripetere le stesse cose
 
         } else {
             printf("La chiave è più piccola della stringa iniziale");
         }
-
+    }   else if (scelta == 2) {
         
-
-
-    }   else if (choice == 2) {
-
         int i;
         time_t t ;
         srand ((unsigned) time(&t));
-        for(i=0; i<=strlen(baseStr); i++){
+        for(i=0; i<=strlen(baseStr); i++){      //generazione chiave random
             key[i] = (rand () % 128);
         }
         printf("La tua chiave random è: %s\n", key);
@@ -74,15 +58,4 @@ int main () {
     }  else {
         printf("Invalid number");
     }
-
-
-
-	
-	/*char encrypted[strlen(baseStr)];
-	encryptDecrypt(baseStr, encrypted);
-	printf("Crittato:%s\n", encrypted);
-	
-	char decrypted[strlen(baseStr)];
-	encryptDecrypt(encrypted, decrypted);
-	printf("Decrittato:%s\n", decrypted);*/
 }
